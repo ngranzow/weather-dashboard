@@ -1,0 +1,22 @@
+:root {
+    --primary: #f5f7fc;
+    --secondary: #000205;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary);
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.hero {
+    background-image: linear-gradient(to right, #adcbff, #03296b);
+    color: var(--primary);
+    text-align: center;
+    padding: 2% 0;
+}
