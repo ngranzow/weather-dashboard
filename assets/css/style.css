@@ -7,16 +7,49 @@
     box-sizing: border-box;
 }
 
-body {
+html {
     background-color: var(--primary);
+}
+
+body {
     margin: 0;
     padding: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.hero {
+.hero-body {
     background-image: linear-gradient(to right, #adcbff, #03296b);
-    color: var(--primary);
     text-align: center;
-    padding: 2% 0;
+    padding: 1% 0;
+}
+
+.title {
+    color: var(--primary);
+    font-size: 3em;
+}
+
+#main {
+    margin: 5px 15px;
+}
+
+#search {
+    border-bottom: solid var(--secondary) 2px;
+}
+
+h2 {
+    padding: 0 0 5px 0;
+    font-size: 1.4em;
+    color: var(--secondary);
+}
+
+button {
+    margin: 10px 0 0 0;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+#current-weather {
+    border: solid var(--secondary) 2px;
+    margin-top: 7px;
+    padding: 10px;
 }
