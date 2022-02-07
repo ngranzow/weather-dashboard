@@ -1,4 +1,4 @@
-var previousBtn = document.getElementById("previous-search-buttons");
+var previousEl = document.getElementById("previous-search-buttons");
 var currentWeatherEl = document.getElementById("current-weather");
 var fiveDayEl = document.getElementById("five-day");
 var currentDate = moment().format("MM/DD/YYYY");
@@ -9,40 +9,55 @@ var dayFive = moment().add(4, 'days').format("MM/DD/YYYY");
 var daySix = moment().add(5, 'days').format("MM/DD/YYYY");
 var mykey = config.MY_KEY;
 var myotherkey = config.MY_OTHER_KEY;
+var savedCities = JSON.parse(localStorage.getItem("cityName")) || [];
+console.log(savedCities);
 
 $(document).ready(function () {
+    // var clearBtn = document.getElementById("clear-btn");
+
+
+        // if (savedCities !== "") {
+        //     previousBtn.innerHTML = "<button class='button saved-city' id='saved-city'>" + savedCities + "</button>";
+        //     clearBtn.classList.remove("hidden");
+
+        //     clearBtn.addEventListener("click", function() {
+        //         localStorage.clear();
+        //         clearBtn.classList.add("hidden");
+        //         previousBtn.innerHTML = "";
+        //     });
+        // } 
+
     $("#search-btn").on("click", function () {
         var city = $(this).siblings("#city-input").val();
         var apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + "&key=" + mykey;
         apiUrl.replace(/\s/g, "_");
-        console.log(city);
+        var newCity = city;
+
+        savedCities.push(newCity);
+        localStorage.setItem("cityName", JSON.stringify(savedCities));
+
+        for (var i = 0; i < savedCities.length; i++) {
+            var previousBtn = document.createElement("button")
+            previousBtn.classList.add("button", "saved-city")
+            previousBtn.innerHTML = savedCities[i];
+            previousEl.appendChild(previousBtn);
+        }
 
         fetch(apiUrl)
             .then(function (response) {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
-
                 if (data.status == "OK") {
-                    console.log(data.status);
-
                     var lat = data.results[0].geometry.location.lat;
                     var lon = data.results[0].geometry.location.lng;
                     var apiWUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + myotherkey;
-                    var latLon = [lat, lon];
-
-                    console.log(lat);
-
-                    localStorage.setItem(city, latLon);
 
                     fetch(apiWUrl)
                         .then(function (response) {
                             return response.json();
                         })
                         .then(function (data) {
-                            console.log(data);
-
                             var currentIcon = data.current.weather[0].icon;
                             var uvi = data.current.uvi;
                             var currentCityEl = document.getElementById("current-city");
@@ -51,7 +66,6 @@ $(document).ready(function () {
                             var currentWindEl = document.getElementById("current-wind");
                             var currentHumidityEl = document.getElementById("current-humidity");
                             var uvIndexEl = document.getElementById("uv-index");
-                            console.log(currentIcon);
 
                             currentWeatherEl.classList.remove("hidden");
                             currentCityEl.innerHTML = ("<h2>" + city + " (" + currentDate + ")</h2>");
@@ -111,86 +125,9 @@ $(document).ready(function () {
                         })
 
                 } else {
-                    alert("Please try again");
+                    alert("Oops! Looks like something went wrong. Please try your search again.");
+                    return;
                 }
             })
     })
 })
-
-
-
-
-var geocodeResults = {
-    "results": [
-        {
-            "address_components": [
-                {
-                    "long_name": "Chicago",
-                    "short_name": "Chicago",
-                    "types": [
-                        "locality",
-                        "political"
-                    ]
-                },
-                {
-                    "long_name": "Cook County",
-                    "short_name": "Cook County",
-                    "types": [
-                        "administrative_area_level_2",
-                        "political"
-                    ]
-                },
-                {
-                    "long_name": "Illinois",
-                    "short_name": "IL",
-                    "types": [
-                        "administrative_area_level_1",
-                        "political"
-                    ]
-                },
-                {
-                    "long_name": "United States",
-                    "short_name": "US",
-                    "types": [
-                        "country",
-                        "political"
-                    ]
-                }
-            ],
-            "formatted_address": "Chicago, IL, USA",
-            "geometry": {
-                "bounds": {
-                    "northeast": {
-                        "lat": 42.023131,
-                        "lng": -87.52366099999999
-                    },
-                    "southwest": {
-                        "lat": 41.6443349,
-                        "lng": -87.9402669
-                    }
-                },
-                "location": {
-                    "lat": 41.8781136,
-                    "lng": -87.6297982
-                },
-                "location_type": "APPROXIMATE",
-                "viewport": {
-                    "northeast": {
-                        "lat": 42.023131,
-                        "lng": -87.52366099999999
-                    },
-                    "southwest": {
-                        "lat": 41.6443349,
-                        "lng": -87.9402669
-                    }
-                }
-            },
-            "place_id": "ChIJ7cv00DwsDogRAMDACa2m4K8",
-            "types": [
-                "locality",
-                "political"
-            ]
-        }
-    ],
-    "status": "OK"
-}

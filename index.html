@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
         integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Weather Dashboard</title>
@@ -22,15 +21,19 @@
     </header>
 
     <main id="main" class="columns">
+        <!-- start search -->
         <div id="search" class="column is-2">
             <h2>Search for a City:</h2>
             <input id="city-input" class="input is-info" type="text" placeholder="Los Angeles"></input>
             <button id="search-btn" class="button is-info">Search</button>
+            <hr>
+            <div id="previous-search-buttons"></div>
+            <button id="clear-btn" class="button is-info hidden">Clear Saved Search</button>
         </div>
-
-        <div id="previous-search-buttons"></div>
+        <!-- end search -->
 
         <div class="column">
+            <!-- start current weather -->
             <div id="current-weather" class="hidden">
                 <div id="current-city"></div>
                 <div id="current-icon"></div>
@@ -39,6 +42,9 @@
                 <div id="current-humidity"></div>
                 <div id="uv-index"></div>
             </div>
+            <!-- end current weather -->
+
+            <!-- start five day forecast -->
             <div id="five-day" class="hidden">
                 <div id="five-day-header"></div>
                 <div class="columns">
@@ -49,6 +55,7 @@
                     <div id="day6" class="column is-2 fiveDay"></div>
                 </div>
             </div>
+            <!-- end five day forecast -->
         </div>
     </main>
 
