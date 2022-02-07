@@ -151,7 +151,6 @@ $(document).ready(function () {
                     })
     
             } else {
-                // if the first API call returns something other than 200/OK this alert pops up
                 alert("Oops! Looks like something went wrong. Please try your search again.");
                 return;
             }
